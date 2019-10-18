@@ -3,4 +3,4 @@ export GOOS = linux
 export GOARCH = amd64
 
 run-load-publisher:
-	go run cmd/csv_to_map/main.go -file "bisac.csv" -separator ";" -quote "\""
+	go run cmd/transformer/main.go -file "codigos_bisac.csv" -separator ";" -quote "\""

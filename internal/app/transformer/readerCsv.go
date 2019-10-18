@@ -1,4 +1,4 @@
-package load_publisher
+package transformer
 
 import (
 	"bufio"
@@ -68,11 +68,7 @@ func readCsv(pathFile string, separator string, quote string) ([]string, map[str
 
 			content := strings.Split(line, separator)
 
-			reKey, err := regexp.Compile("[^0-9]+")
-			if err != nil {
-				log.Fatal(err)
-			}
-			key := reKey.ReplaceAllString(content[0], "")
+			key := content[0]
 
 			for _, data := range content {
 				data = strings.Trim(data, quote)

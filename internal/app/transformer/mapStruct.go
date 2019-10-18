@@ -1,4 +1,4 @@
-package load_publisher
+package transformer
 
 type MapStruct struct {
 	Code        string `json:"Código" bson:"code"`
