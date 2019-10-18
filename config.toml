@@ -1,0 +1,5 @@
+host="10.2.166.153:27004"
+database="b2w_presal_hml"
+replicaset="B2wPersistence40HmlReplSet"
+username="b2w_presal_hml"
+password="JRF96IvTI2Dz"

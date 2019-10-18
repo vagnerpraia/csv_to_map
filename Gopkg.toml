@@ -1,0 +1,12 @@
+[metadata]
+  name = "Load Publisher"
+  version = "v1.0.0"
+  organization = "B2W"
+
+[[constraint]]
+  name = "github.com/BurntSushi/toml"
+  version = "0.3.1"
+
+[[constraint]]
+  name = "github.com/globalsign/mgo"
+  version = "r2018.06.15"
