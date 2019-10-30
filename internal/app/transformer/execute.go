@@ -3,6 +3,7 @@ package transformer
 import (
 	"fmt"
 	"sort"
+	"strings"
 )
 
 func Execute(pathFileSource string, formatSource string, pathFileDestiny string, formatDestiny string, separator string, quote string, resultForm string) error {
@@ -10,8 +11,10 @@ func Execute(pathFileSource string, formatSource string, pathFileDestiny string,
 	var mapSource map[string][]string
 	var stringDestiny string
 
-	if formatSource == "csv" {
+	switch formatSource {
+	case "csv":
 		_, mapSource = readCsv(pathFileSource, separator, quote)
+		break
 	}
 
 	var keys []string
@@ -20,15 +23,15 @@ func Execute(pathFileSource string, formatSource string, pathFileDestiny string,
 	}
 	sort.Strings(keys)
 
-	if formatDestiny == "map_go" {
-		stringDestiny += "map[string]string{\n"
+	switch formatDestiny {
+	case "map_go":
+		stringDestiny = getMapGo(keys, mapSource)
+		break
 
-		for _, key := range keys {
-			value := mapSource[key][1]
-			stringDestiny += "\t\"" + key + "\": \"" + value + "\",\n"
-		}
+	case "json":
+		stringDestiny = getJson(keys, mapSource)
+		break
 
-		stringDestiny += "}\n"
 	}
 
 	if resultForm == "print" {
@@ -38,4 +41,34 @@ func Execute(pathFileSource string, formatSource string, pathFileDestiny string,
 	}
 
 	return nil
+}
+
+func getMapGo(keys []string, valuesMap map[string][]string) string {
+
+	result := "map[string]string{\n"
+
+	for _, key := range keys {
+		value := valuesMap[key][1]
+		result += "\t\"" + key + "\": \"" + value + "\",\n"
+	}
+
+	result += "}\n"
+
+	return result
+}
+
+func getJson(keys []string, valuesMap map[string][]string) string {
+
+	result := "{\n"
+
+	for _, key := range keys {
+		value := valuesMap[key][1]
+		result += "\t\"" + key + "\": \"" + value + "\",\n"
+	}
+
+	result = strings.TrimRight(result, ",\n")
+
+	result += "\n}\n"
+
+	return result
 }
